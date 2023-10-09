@@ -289,28 +289,37 @@
     
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Lean sections
+%% Special sections
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \titleformat{\section}
 {\clearpage\normalfont\Large\bfseries}{\thesection}{1em}{}
 
-\titleclass{\leanSection}{straight}[\subsection]
+\titleclass{\leanSection}{straight}[\section]
 \newcounter{leanSection}
 \titleformat{\leanSection}{\clearpage\normalfont\large\bfseries\color{leanpurple}}{Lean Interlude \theleanSection:}{1em}{}
-%\titleformat{\lsubSection}{\normalfont\large\bfseries}{\thesubsection}{1em}{}
 \titlespacing*{\leanSection} {0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
-%\titlecontents{leanSection}[1.5em]{}{}{\hspace*{-2.3em}}{\titlerule*[0.75pc]{.}\contentspage} %bad formatting, but only here to produce a content line in ToC
-%\dottedcontents{leanSection}[1.5cm]{}{2.3em}{1pc}
-
-\renewcommand{\sectionmark}[1]{\markright{\thesection~---~#1}}
-\renewcommand{\subsectionmark}[1]{}
-\renewcommand{\leanSectionmark}[1]{}
-%\renewcommand{\subsectionmark}[1]{ \markright{#1}{} }
-%\renewcommand{\leanSectionmark}[1]{\markright{{\color{leanpurple}Lean: #1}}{} }
-
 \titlecontents{leanSection}[5.4em]{}
 {\contentslabel[{\color{leanpurple}Lean \thecontentslabel:}]{3.8em}}
 {}
 {\titlerule*[.75pc]{.}\contentspage}
+
+%\definecolor{exergreen}{HTML}{007700}
+%\titleclass{\exerSection}{straight}[\subsection]
+%\newcounter{exerSection}
+%\titleformat{\exerSection}{\clearpage\normalfont\large\bfseries\color{exergreen}}{Exercises:}{1em}{}
+%\titlespacing*{\exerSection} {0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+%\titlecontents{exerSection}[5.4em]{}
+%{\contentslabel[{\color{exergreen}Exer. \thecontentslabel}]{3.8em}}
+%{}
+%{\titlerule*[.75pc]{.}\contentspage}
+
+\renewcommand{\sectionmark}[1]{\markright{\thesection~---~#1}}
+\renewcommand{\subsectionmark}[1]{}
+\renewcommand{\leanSectionmark}[1]{}
+%\renewcommand{\exerSectionmark}[1]{}
+%\renewcommand{\subsectionmark}[1]{ \markright{#1}{} }
+%\renewcommand{\leanSectionmark}[1]{\markright{{\color{leanpurple}Lean: #1}}{} }
+
+
 
 
