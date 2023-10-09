@@ -1,0 +1,339 @@
+% Listing style definition for the Lean Theorem Prover.
+% Defined by Jeremy Avigad, 2015, by modifying Assia Mahboubi's SSR style.
+% Unicode replacements taken from Olivier Verdier's unixode.sty
+\RequirePackage{listings}
+\RequirePackage{lstautogobble}
+
+\definecolor{commentcolor}   {RGB}{  140, 140, 140}
+\lstdefinestyle{leanCode}{
+    basicstyle=\footnotesize\ttfamily,
+    numberstyle=\tiny\ttfamily,
+    numbers=left,
+    breaklines=true,
+    frame=single,
+    xleftmargin=10pt
+}
+\lstdefinestyle{leanBlock}{
+    basicstyle=\small\ttfamily,
+    breaklines=true,
+  xleftmargin=.2\textwidth, xrightmargin=.2\textwidth
+}
+\lstdefinelanguage{lean} {
+    mathescape=false,
+    texcl=false,
+    morekeywords=[1]{
+    import, prelude, protected, private, noncomputable, definition, meta, renaming,
+    hiding, parameter, parameters, begin, constant, constants,
+    lemma, variable, variables, theory,
+    print, theorem, example,
+    open, as, export, override, axiom, axioms, inductive, with,
+    structure, record, universe, universes,
+    alias, help, precedence, reserve, declare_trace, add_key_equivalence,
+    match, infix, infixl, infixr, notation, postfix, prefix, instance,
+    eval, reduce, check, end, this,
+    using, using_well_founded, namespace, section,
+    attribute, local, set_option, extends, include, omit, class,
+    raw, replacing,
+    calc, have, show, suffices, by, in, at, let, forall, Pi, fun,
+    exists, if, dif, then, else, assume, obtain, from, register_simp_ext, unless, break, continue,
+    mutual, do, def, run_cmd, const,
+    partial, mut, where, macro, syntax, deriving,
+    return, try, catch, for, macro_rules, declare_syntax_cat, abbrev},
+    morekeywords=[2]{Sort, Type, Prop},
+    morekeywords=[3]{
+    assumption,
+    apply, { intro}, intros, allGoals,
+    generalize, clear, revert, done, exact,
+    refine, repeat, cases, rewrite, rw,
+    simp, simp_all, contradiction,
+    constructor, injection,
+    induction,
+    },
+    literate={\$}{{\$}}1
+        {_}{{\ensuremath{\_}}}1
+        {ℂ}{{\ensuremath{\mathbb{C}}}}1
+        {α}{{\ensuremath{\mathrm{\alpha}}}}1
+        {β}{{\ensuremath{\mathrm{\beta}}}}1
+        {γ}{{\ensuremath{\mathrm{\gamma}}}}1
+        {δ}{{\ensuremath{\mathrm{\delta}}}}1
+        {ε}{{\ensuremath{\mathrm{\varepsilon}}}}1
+        {ζ}{{\ensuremath{\mathrm{\zeta}}}}1
+        {η}{{\ensuremath{\mathrm{\eta}}}}1
+        {θ}{{\ensuremath{\mathrm{\theta}}}}1
+        {ι}{{\ensuremath{\mathrm{\iota}}}}1
+        {κ}{{\ensuremath{\mathrm{\kappa}}}}1
+        {μ}{{\ensuremath{\mathrm{\mu}}}}1
+        {ν}{{\ensuremath{\mathrm{\nu}}}}1
+        {ξ}{{\ensuremath{\mathrm{\xi}}}}1
+        {π}{{\ensuremath{\mathrm{\mathnormal{\pi}}}}}1
+        {ρ}{{\ensuremath{\mathrm{\rho}}}}1
+        {σ}{{\ensuremath{\mathrm{\sigma}}}}1
+        {τ}{{\ensuremath{\mathrm{\tau}}}}1
+        {φ}{{\ensuremath{\mathrm{\varphi}}}}1
+        {χ}{{\ensuremath{\mathrm{\chi}}}}1
+        {ψ}{{\ensuremath{\mathrm{\psi}}}}1
+        {ω}{{\ensuremath{\mathrm{\omega}}}}1
+        {Γ}{{\ensuremath{\mathrm{\Gamma}}}}1
+        {Δ}{{\ensuremath{\mathrm{\Delta}}}}1
+        {Θ}{{\ensuremath{\mathrm{\Theta}}}}1
+        {Λ}{{\ensuremath{\mathrm{\Lambda}}}}1
+        {Σ}{{\ensuremath{\mathrm{\Sigma}}}}1
+        {Φ}{{\ensuremath{\mathrm{\Phi}}}}1
+        {Ξ}{{\ensuremath{\mathrm{\Xi}}}}1
+        {Ψ}{{\ensuremath{\mathrm{\Psi}}}}1
+        {Ω}{{\ensuremath{\mathrm{\Omega}}}}1
+        {ℵ}{{\ensuremath{\aleph}}}1
+        {≤}{{\ensuremath{\leq}}}1
+        {≥}{{\ensuremath{\geq}}}1
+        {≠}{{\ensuremath{\neq}}}1
+        {≈}{{\ensuremath{\approx}}}1
+        {≡}{{\ensuremath{\equiv}}}1
+        {≃}{{\ensuremath{\simeq}}}1
+        {≤}{{\ensuremath{\leq}}}1
+        {≥}{{\ensuremath{\geq}}}1
+        {∂}{{\ensuremath{\partial}}}1
+        {∆}{{\ensuremath{\triangle}}}1
+        {⁻}{{\ensuremath{^{-}}}}1
+        {▸}{{\ensuremath{\blacktriangleright}}}1
+        {∧}{{\ensuremath{\wedge}}}1
+        {∨}{{\ensuremath{\vee}}}1
+        {¬}{{\ensuremath{\neg}}}1
+        {⊢}{{\ensuremath{\vdash}}}1
+        {⊣}{{\ensuremath{\dashv}}}1
+        {⟨}{{\ensuremath{\langle}}}1
+        {⟩}{{\ensuremath{\rangle}}}1
+        {↦}{{\ensuremath{\mapsto}}}1
+        {←}{{\ensuremath{\leftarrow}}}1
+        {<-}{{\ensuremath{\leftarrow}}}1
+        {→}{{\ensuremath{\rightarrow}}}1
+        {⟶}{{\ensuremath{\longrightarrow}}}1
+        {⁼}{{\ensuremath{^{=}}}}1
+        {↔}{{\ensuremath{\leftrightarrow}}}1
+        {⇒}{{\ensuremath{\Rightarrow}}}1
+        {⟹}{{\ensuremath{\Longrightarrow}}}1
+        {⇐}{{\ensuremath{\Leftarrow}}}1
+        {⟸}{{\ensuremath{\Longleftarrow}}}1
+        {∩}{{\ensuremath{\cap}}}1
+        {∪}{{\ensuremath{\cup}}}1
+        {⊂}{{\ensuremath{\subseteq}}}1
+        {⊆}{{\ensuremath{\subseteq}}}1
+        {⊄}{{\ensuremath{\nsubseteq}}}1
+        {⊈}{{\ensuremath{\nsubseteq}}}1
+        {⊃}{{\ensuremath{\supset}}}1
+        {⊇}{{\ensuremath{\supseteq}}}1
+        {⊅}{{\ensuremath{\nsupseteq}}}1
+        {⊉}{{\ensuremath{\nsupseteq}}}1
+        {∈}{{\ensuremath{\in}}}1
+        {∉}{{\ensuremath{\notin}}}1
+        {∋}{{\ensuremath{\ni}}}1
+        {∌}{{\ensuremath{\notni}}}1
+        {∅}{{\ensuremath{\emptyset}}}1
+        {∖}{{\ensuremath{\setminus}}}1
+        {†}{{\ensuremath{\dag}}}1
+        {ℕ}{{\ensuremath{\mathbb{N}}}}1
+        {ℤ}{{\ensuremath{\mathbb{Z}}}}1
+        {ℝ}{{\ensuremath{\mathbb{R}}}}1
+        {ℚ}{{\ensuremath{\mathbb{Q}}}}1
+        {ℂ}{{\ensuremath{\mathbb{C}}}}1
+        {⌞}{{\ensuremath{\llcorner}}}1
+        {⌟}{{\ensuremath{\lrcorner}}}1
+        {⦃}{{\ensuremath{\{\!|}}}1
+        {⦄}{{\ensuremath{|\!\}}}}1
+        {⟦}{{\ensuremath{\llbracket}}}1
+        {⟧}{{\ensuremath{\rrbracket}}}1
+        {‖}{{\ensuremath{\|}}}1
+        {₁}{{\ensuremath{_1}}}1
+        {₂}{{\ensuremath{_2}}}1
+        {₃}{{\ensuremath{_3}}}1
+        {₄}{{\ensuremath{_4}}}1
+        {₅}{{\ensuremath{_5}}}1
+        {₆}{{\ensuremath{_6}}}1
+        {₇}{{\ensuremath{_7}}}1
+        {₈}{{\ensuremath{_8}}}1
+        {₉}{{\ensuremath{_9}}}1
+        {₀}{{\ensuremath{_0}}}1
+        {ᵢ}{{\ensuremath{_i}}}1
+        {ⱼ}{{\ensuremath{_j}}}1
+        {ₐ}{{\ensuremath{_a}}}1
+        {¹}{{\ensuremath{^1}}}1
+        {ₙ}{{\ensuremath{_n}}}1
+        {ₘ}{{\ensuremath{_m}}}1
+        {↑}{{\ensuremath{\uparrow}}}1
+        {↓}{{\ensuremath{\downarrow}}}1
+        {...}{{\ensuremath{\ldots}}}1
+        {·}{{\ensuremath{\cdot}}}1
+        {▸}{{\ensuremath{\triangleright}}}1
+        {Σ}{{\ensuremath{\Sigma}}}1
+        {Π}{{\ensuremath{\Pi}}}1
+        {∀}{{\ensuremath{\forall}}}1
+        {∃}{{\ensuremath{\exists}}}1
+        {λ}{{\ensuremath{\mathrm{\lambda}}}}1
+        {:=}{{:=}}1
+        {=}{{=}}1
+        {<|>}{{<|>}}1
+        {<\$>}{{<\$>}}1
+        {+}{{+}}1
+        {*}{{*}}1
+        {`}{{\textasciigrave}}1
+        {∫}{{\ensuremath{\int}}}1
+        {∑}{{\ensuremath{\mathrm{\Sigma}}}}1
+        {Π}{{\ensuremath{\mathrm{\Pi}}}}1
+        {⊥}{{\ensuremath{\perp}}}1
+        {⊤}{{\ensuremath{\top}}}1
+        {◇}{{\ensuremath{\diamond}}}1
+        {∞}{{\ensuremath{\infty}}}1
+        {∂}{{\ensuremath{\partial}}}1
+        {∓}{{\ensuremath{\mp}}}1
+        {±}{{\ensuremath{\pm}}}1
+        {×}{{\ensuremath{\times}}}1
+        {⊕}{{\ensuremath{\oplus}}}1
+        {⊗}{{\ensuremath{\otimes}}}1
+        {⊞}{{\ensuremath{\boxplus}}}1
+        {∇}{{\ensuremath{\nabla}}}1
+        {√}{{\ensuremath{\sqrt}}}1
+        {⬝}{{\ensuremath{\cdot}}}1
+        {•}{{\ensuremath{\cdot}}}1
+        {∘}{{\ensuremath{\circ}}}1,
+% % Comments
+% %comment=[s][\itshape \color{commentcolor}]{/-}{-/},
+morecomment=[s][\color{commentcolor}]{/-}{-/},
+morecomment=[l][\itshape \color{commentcolor}]{--},
+% % Spaces are not displayed as a special character
+showstringspaces=false,
+% % keep spaces
+keepspaces=true,
+% % String delimiters
+morestring=[b]",
+morestring=[d],
+% % Size of tabulations
+tabsize=3,
+% % Enables ASCII chars 128 to 255
+extendedchars=false,
+% % Case sensitivity
+sensitive=true,
+% % Automatic breaking of long lines
+% breaklines=true,
+breakatwhitespace=true,
+% % Default style fors listingsred
+% basicstyle=\ttfamily\small,
+% % Position of captions is bottom
+% captionpos=b,
+% % Full flexible columns
+columns=[l]fullflexible,
+% Style for declaration keywords
+keywordstyle=[1]{\ttfamily\color{leanpurple}},
+% Style for sorts
+keywordstyle=[2]{\ttfamily\color{leanpurple}},
+% Style for tactics keywords
+keywordstyle=[3]{\ttfamily\color{red}},
+% Style for attributes
+% keywordstyle=[4]{\ttfamily\color{attributecolor}},
+% Style for strings
+stringstyle=\ttfamily,
+% Style for comments
+commentstyle={\ttfamily\footnotesize },
+}
+
+
+
+
+\newcommand{\lcode}[2][]{{\sloppy
+\ifmmode
+    \text{\lstinline[language=lean,style=leanCode,#1]`#2`}
+\else
+    {\lstinline[language=lean,style=leanCode,#1]`#2`}%
+\fi}}
+\lstnewenvironment{codeblock}[1][]{\lstset{language=lean,style=leanBlock,#1}}{}
+
+\newcommand{\leanLib}[4]{
+    \begin{figure}\noindent{\small \colorbox{leanpurple}{\ \color{white}#2\phantom{/}}}
+    \lstinputlisting[language=lean,style=leanCode,firstline=#3,firstnumber=#3,lastline=#4]{../src/#2}
+    \caption{#2}\label{code:#1}
+    \end{figure}
+}
+\newcommand{\leanLibCaption}[5]{
+    \begin{figure}\centering
+    \lstinputlisting[language=lean,style=leanCode,firstline=#3,firstnumber=#3,lastline=#4]{../src/#2}
+    \caption{#5}\label{code:#1}
+    \end{figure}
+}
+\newcommand{\leanLibAnon}[3]{
+    \lstinputlisting[language=lean,style=leanCode,firstline=#2,numbers=none,frame=none,lastline=#3]{../src/#1}
+}
+
+\newcounter{j}
+\newrobustcmd{\Lean}[4][]{%
+   %\newcommand{\printall}[1]{\foreach \n in {#1}{\n}} 
+    %\ifx\\#1\\%
+    %    \lstinputlisting[language=agda,style=15150code,frame=shadowbox,#3,firstnumber=#4]{#2}%
+    %\else
+        \setcounter{j}{1}
+        \foreach \n in {#1} {%
+            \ifnum \n>-1
+            \ifnum \n=0
+                \only<\value{j}|handout:0>{\lstinputlisting[language=lean,style=leanCode,firstline=#3,firstnumber=#3,lastline=#4]{#2}}%
+            \else
+                \only<\value{j}|handout:0>{\lstinputlisting[language=lean,style=leanCode,firstline=#3,firstnumber=#3,lastline=\n]{#2}}%
+            \fi\fi
+
+            \stepcounter{j}%
+        }%
+            \only<\value{j}-|handout:1>{\lstinputlisting[language=lean,style=leanCode,firstline=#3,firstnumber=#3,lastline=#4]{#2}}%
+    %\fi
+    }
+\newrobustcmd{\LeanCat}[4][]{%
+    	\hspace{-3pt}{\small \colorbox{red}{\ \color{white}bf4eda9\phantom{/}}\colorbox{leanpurple}{\ \color{white}#2\phantom{/}}\ {\color{auxColor}\href{https://github.com/lean-catLogic/formalization/blob/bf4eda918a90ed04b8867bfcc587cc0dda1c4347/src/#2\#L#3-L#4}{[permalink]}}}%
+    	\vspace{0.25cm}
+	\Lean[#1]{../../../../lean-catLogic/src/#2}{#3}{#4}
+}
+\newrobustcmd{\OldLeanCat}[4][]{%
+%	{\small {\color{presentColor} #2\ [\#1beaf90]}{\color{accentColor}\href{https://github.com/lean-catLogic/formalization/blob/1beaf90bb0f829089d69d394827dbed2984b63f1/src/#2\#L#3-L#4}{[permalink]}}}
+    	\hspace{-3pt}{\small \colorbox{red}{\ \color{white}1beaf90\phantom{/}}\colorbox{leanpurple}{\ \color{white}#2\phantom{/}}\ {\color{auxColor}\href{https://github.com/lean-catLogic/formalization/blob/1beaf90bb0f829089d69d394827dbed2984b63f1/src/#2\#L#3-L#4}{[permalink]}}}%
+    	\vspace{0.25cm}
+	\Lean[#1]{../../../../lean-catLogic-old/src/#2}{#3}{#4}
+}
+
+% % modifiers, taken from lean-syntax.el
+% % note: 'otherkeywords' is needed because these use a different symbol.
+% % this command doesn't allow us to specify a number -- they are put with [1]
+% % otherkeywords={
+% % [persistent], [notation], [visible], [instance], [trans_instance],
+% % [class], [parsing-only], [coercion], [unfold_full], [constructor],
+% % [reducible], [irreducible], [semireducible], [quasireducible], [wf],
+% % [whnf], [multiple_instances], [none], [decl], [declaration],
+% % [relation], [symm], [subst], [refl], [trans], [simp], [congr], [unify],
+% % [backward], [forward], [no_pattern], [begin_end], [tactic], [abbreviation],
+% % [reducible], [unfold], [alias], [eqv], [intro], [intro!], [elim], [grinder],
+% % [localrefinfo], [recursor]
+% % },
+
+% % Various symbols
+
+
+
+
+% % Style for (listings') identifiers
+% identifierstyle={\ttfamily\color{black}},
+% % Note : highlighting of Coq identifiers is done through a new
+% % delimiter definition through an lstset at the begining of the
+% % document. Don't know how to do better.
+
+% % Style for declaration keywords
+% keywordstyle=[1]{\ttfamily\color{keywordcolor}},
+
+% % Style for sorts
+% keywordstyle=[2]{\ttfamily\color{sortcolor}},
+
+% % Style for tactics keywords
+% keywordstyle=[3]{\ttfamily\color{tacticcolor}},
+
+% % Style for attributes
+% keywordstyle=[4]{\ttfamily\color{attributecolor}},
+
+% % Style for strings
+% stringstyle=\ttfamily,
+
+% % Style for comments
+% commentstyle={\ttfamily\footnotesize },
+
+% }

@@ -1,3 +1,17 @@
 *.olean
 /_target
 /leanpkg.path
+textbook/*Links
+textbook/*.fdb_latexmk
+textbook/*.fls
+textbook/*.log
+textbook/*.nlo
+textbook/*.out
+textbook/*.thm
+textbook/*.toc
+textbook/tester
+textbook/*.aux
+textbook/REPLACER
+textbook/*.bib
+textbook/*.yml
+textbook/*.lean

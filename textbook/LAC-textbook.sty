@@ -1,0 +1,316 @@
+\usepackage{amsmath}
+\usepackage[frak=euler]{mathalfa}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usepackage{cancel}
+\usepackage{stmaryrd}
+\usepackage{xr}
+\usepackage{mathrsfs}
+\usepackage{xfrac}
+\usetikzlibrary{arrows}
+\usepackage[amsthm,thmmarks]{ntheorem}
+\usepackage{array}
+\usepackage{import}
+\usepackage{aliascnt}
+\usepackage{chngcntr}
+\usepackage{titlesec}
+\usepackage{titletoc}
+\usepackage{datetime}
+\usepackage{hyperref}                                                                                
+\usepackage[nameinlink,capitalize]{cleveref}
+\usepackage{bbm}
+\usepackage{proof}
+\usepackage{mdframed}
+\usepackage{dirtytalk}
+\usepackage{listofitems}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Page formatting
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[margincaption,rightcaption,ragged,wide]{sidecap}
+\sidecaptionvpos{figure}{t} 
+%\sidecaptionvpos{table}{t}
+
+
+%\title{Presheaf Models of Polarized Higher-Order Abstract Syntax}
+%\author{Jacob Neumann}
+%\date{\today}
+
+\usepackage[a4paper, marginparwidth=4cm]{geometry}
+\evensidemargin4cm
+\oddsidemargin0cm
+\topmargin-2cm
+\textwidth12.5cm
+\textheight23.5cm
+\setlength{\parindent}{20pt}
+\setlength{\parskip}{5pt plus 1pt}
+
+\pagestyle{fancyplain}
+\thispagestyle{plain}
+%\reversemarginpar
+
+
+%\makeatletter
+\lhead{\fancyplain{}{\bfseries COMP2012 (LAC)}}
+\rhead{\fancyplain{}{\rightmark}}
+\chead{\fancyplain{}{}}
+%\makeatother
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% DFA diagrams
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\pgfmathsetmacro{\halfCell}{0.35}
+\pgfmathsetmacro{\fullCell}{2 * \halfCell}
+\newcounter{k}
+%%%%%
+%  #1: Baseline
+%  #2: Tape
+%  #3: Current cell index
+%  #4: Current state
+%  #5: State text styling
+%  #6: Cell text styling
+%%%%%
+\newcommand{\DFAsimpleCore}[6][0]{%
+    \setcounter{k}{0}
+    \pgfmathsetmacro{\baseline}{#1}
+    
+    \foreach \thestr in {#2}{
+        \pgfmathsetmacro{\leftX}{(\thek * \fullCell) - \halfCell}
+        \pgfmathsetmacro{\rightX}{(\thek * \fullCell) + \halfCell}
+        	%\ifnum\value{k}=#2
+		%\draw[red] (\leftX,0.5) rectangle (\rightX,-0.5);
+		%\else
+		\draw[black] (\leftX,\baseline + \halfCell) rectangle (\rightX,\baseline - \halfCell);
+		%\fi
+	  	\node[anchor=center] at (\thek * \fullCell, \baseline) {{#5\centering \thestr}};
+		\stepcounter{k}
+    }
+    	
+    \pgfmathsetmacro{\currentCenterX}{(#3 * \fullCell)}
+    \pgfmathsetmacro{\currentLeftX}{\currentCenterX - \halfCell}
+    \pgfmathsetmacro{\currentRightX}{\currentCenterX + \halfCell}
+    \draw[red,line width=#6mm] (\currentLeftX,\baseline + \halfCell) rectangle (\currentRightX,\baseline - \halfCell);
+    \fill[red] (\currentCenterX,\baseline + \halfCell) -- (\currentCenterX + .2, \baseline + \fullCell) -- (\currentCenterX - .2, \baseline + \fullCell) -- cycle ;
+ 
+ 
+    \pgfmathsetmacro{\boxLeft}{\currentCenterX - (1 * \fullCell)}   
+    \pgfmathsetmacro{\boxRight}{\currentCenterX + (1 * \fullCell)}   
+    \pgfmathsetmacro{\boxTop}{\baseline + (2.5 * \fullCell)} 
+    \pgfmathsetmacro{\boxCenterY}{\baseline + (1.75 * \fullCell)}
+    \draw[red,line width=#6mm] (\boxLeft, \boxTop) rectangle (\boxRight, \baseline + \fullCell);
+    \node at (\currentCenterX,\boxCenterY) {{#5\color{red}\texttt{#4}}};
+    
+    \draw[blue,line width=#6mm] (-3 * \fullCell, \baseline + \halfCell) circle (1.5 * \halfCell);
+    \node at (-3 * \fullCell, \baseline + \halfCell) {{#5\color{blue}\textsf{#3}}};
+
+\vspace{1cm}
+}
+\newcommand{\DFAcenteredCore}[6][0]{%
+    \setcounter{k}{0}
+    \pgfmathsetmacro{\baseline}{#1}
+    
+    \foreach \thestr in {#2}{
+    	\pgfmathsetmacro{\indexOffset}{int(\thek - #3)}
+        \pgfmathsetmacro{\centerX}{(\indexOffset * \fullCell)}
+        \pgfmathsetmacro{\leftX}{(\indexOffset * \fullCell) - \halfCell}
+        \pgfmathsetmacro{\rightX}{(\indexOffset * \fullCell) + \halfCell}
+    	
+    	\ifnum \indexOffset>-11 \ifnum \indexOffset<11
+        	%\ifnum\value{k}=#2
+		%\draw[red] (\leftX,0.5) rectangle (\rightX,-0.5);
+		%\else
+	  \draw[black] (\leftX,\baseline + \halfCell) rectangle (\rightX,\baseline - \halfCell);
+		%\fi
+	  \node[anchor=center] at (\indexOffset * \fullCell, \baseline) {{#5\centering \thestr}};
+	\fi\fi
+	
+	\ifnum \indexOffset=-11
+	  \draw[black] (\centerX,\baseline + \halfCell) -- (\rightX,\baseline + \halfCell) -- (\rightX,\baseline - \halfCell) -- (\centerX,\baseline - \halfCell);
+	  \node[anchor=east] at (\indexOffset * \fullCell, \baseline) {#5 \ldots};
+	\fi 
+	\ifnum \indexOffset=11
+	  \draw[black] (\centerX,\baseline + \halfCell) -- (\leftX,\baseline + \halfCell) -- (\leftX,\baseline - \halfCell) -- (\centerX,\baseline - \halfCell);
+	  \node[anchor=west] at (\indexOffset * \fullCell, \baseline) {#5\ldots};
+	\fi 
+	
+	
+	\stepcounter{k}
+    }
+    	
+    \pgfmathsetmacro{\currentCenterX}{0}
+    \pgfmathsetmacro{\currentLeftX}{\currentCenterX - \halfCell}
+    \pgfmathsetmacro{\currentRightX}{\currentCenterX + \halfCell}
+    \draw[red,line width=#6mm] (\currentLeftX,\baseline + \halfCell) rectangle (\currentRightX,\baseline - \halfCell);
+    \fill[red] (\currentCenterX,\baseline + \halfCell) -- (\currentCenterX + .2, \baseline + \fullCell) -- (\currentCenterX - .2, \baseline + \fullCell) -- cycle ;
+ 
+ 
+    \pgfmathsetmacro{\boxLeft}{\currentCenterX - (1 * \fullCell)}   
+    \pgfmathsetmacro{\boxRight}{\currentCenterX + (1 * \fullCell)}   
+    \pgfmathsetmacro{\boxTop}{\baseline + (2.5 * \fullCell)} 
+    \pgfmathsetmacro{\boxCenterY}{\baseline + (1.75 * \fullCell)}
+    \draw[red,line width=#6mm] (\boxLeft, \boxTop) rectangle (\boxRight, \baseline + \fullCell);
+    \node at (\currentCenterX,\boxCenterY) {{#5\color{red}\texttt{#4}}};
+    
+    \draw[blue,line width=#6mm] (-14 * \fullCell, \baseline + \halfCell) circle (1.5 * \halfCell);
+    \node at (-14 * \fullCell, \baseline + \halfCell) {{#5\color{blue}\textsf{#3}}};
+
+\vspace{1cm}
+}
+
+%% [DEP]
+
+\usepackage{xparse}
+\ExplSyntaxOn
+\NewDocumentCommand{\DFAdesc}{mm}
+  {
+   \tl_new:c { g_tuple_d#1_tl }
+   \tl_gset:cn { g_tuple_d#1_tl } { {#2} }
+  }
+\DeclareExpandableDocumentCommand{\extractDFAstate}{m}
+  {
+   \tl_item:cn { g_tuple_d#1_tl } { 1 }
+  }
+\ExplSyntaxOff
+
+%\newcommand{\DFAprogress}[1]{
+%    \@for\next:=#1\do{	
+%    }
+
+%}
+
+%% [DEP]
+
+
+\newcounter{DFAsimpleCount}
+\newcounter{tapelength}
+\newcommand{\DFAsimpleScale}[5][1]{
+    \setcounter{tapelength}{0}%
+    \@for\@tempa:=#2\do{\stepcounter{tapelength}}%
+    \setcounter{DFAsimpleCount}{0}%
+    \begin{tikzpicture}[scale=#4]
+    \foreach \s in {#3}{
+        \pgfmathsetmacro{\currentBaseline}{-3.5 * \fullCell * \theDFAsimpleCount}
+        \pgfmathsetmacro{\currentIndex}{int(#1 * \theDFAsimpleCount)}
+        \pgfmathsetmacro{\scaleWidth}{1.5 * #4}
+        %\ifx \value{#4} < 0.85
+        %    \DFAsimpleCore[\currentBaseline]{#2}{\theDFAsimpleCount}{\s}{\small}
+        %\elifx \value{#4}<0.85
+        %    \DFAsimpleCore[\currentBaseline]{#2}{\theDFAsimpleCount}{\s}{\normalsize}
+        %\elifx \value{#4}<0.9
+            
+        \ifnum \value{tapelength} > 20
+    	    \DFAcenteredCore[\currentBaseline]{#2}{\currentIndex}{\s}{#5}{\scaleWidth};
+        \else 
+    	    \DFAsimpleCore[\currentBaseline]{#2}{\currentIndex}{\s}{#5}{\scaleWidth};
+        \fi
+        %\else 
+        %    \DFAsimpleCore[\currentBaseline]{#2}{\theDFAsimpleCount}{\s}{\huge}
+        %\fi
+        \stepcounter{DFAsimpleCount}
+    }
+    \end{tikzpicture}%
+}
+%\newcommand{\DFAsimpleLarge}[3][1]{\DFAsimpleScale[#1]{#2}{#3}{1}{\Large}}
+\newcommand{\DFAsimpleFull}[3][1]{\DFAsimpleScale[#1]{#2}{#3}{1.2}{\Large}}
+\newcommand{\DFAsimpleHalf}[3][1]{\DFAsimpleScale[#1]{#2}{#3}{0.6}{\normalsize}}
+\newcommand{\DFAsimpleThird}[3][1]{\DFAsimpleScale[#1]{#2}{#3}{0.4}{\tiny}}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% hyperref
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\definecolor{emerald}{HTML}{319b84}
+\definecolor{darkEmerald}{HTML}{1f6153}
+
+\hypersetup{
+        bookmarks=true,         % show bookmarks bar?
+        colorlinks=true,       % false: boxed links; true: colored links
+        linkcolor=emerald,          % color of internal links (change box color with linkbordercolor)
+        citecolor=darkEmerald,        % color of links to bibliography
+        filecolor=cyan,      % color of file links
+        urlcolor=cyan           % color of external links
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Box environments
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{aliascnt}
+% Theorem referencing
+\theoremstyle{break}
+%\theoremindent20pt
+
+%\newcommand{\auxBox}[2][white]{\noindent\colorbox{auxColor}{{\color{#1}\bfseries #2}}}
+\newcommand{\mainBox}[2][white]{\noindent\colorbox{red}{{\color{#1}\bfseries #2}}}
+
+
+\theorembodyfont{\upshape}
+
+  \theoremheaderfont{\normalfont\bfseries\color{black}\hspace{-14pt}\colorbox{yellow}{\strut\hspace{3cm}}\vspace{0.2cm}\hspace{-3cm}}
+  \newtheorem*{warning}{Warning!}
+  \surroundwithmdframed[
+    linecolor=yellow,
+    innertopmargin=-1pt,
+    linewidth=.15cm,
+    topline=false,
+    rightline=false,
+    bottomline=false]{warning}
+
+
+  \definecolor{leanpurple}{HTML}{590082}
+  \theoremheaderfont{\normalfont\bfseries\color{white}\hspace{-14pt}\colorbox{leanpurple}{\strut\hspace{3cm}}\vspace{0.2cm}\hspace{-3cm}}
+  \newtheorem*{leannote}{Lean}
+  \surroundwithmdframed[
+    linecolor=leanpurple,
+    innertopmargin=-1.5pt,
+    linewidth=.15cm,
+    topline=false,
+    rightline=false,
+    bottomline=false]{leannote}
+  
+  \theoremheaderfont{\normalfont\bfseries\color{white}\hspace{-14pt}\colorbox{purple}{\strut\hspace{3cm}}\vspace{0.2cm}\hspace{-3cm}}
+  \newtheorem{definition}{Defn.}[section]
+  \surroundwithmdframed[
+    linecolor=purple,
+    innertopmargin=-1.5pt,
+    linewidth=.15cm,
+    topline=false,
+    rightline=false,
+    bottomline=false]{definition}
+    
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Lean sections
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\titleformat{\section}
+{\clearpage\normalfont\Large\bfseries}{\thesection}{1em}{}
+
+\titleclass{\leanSection}{straight}[\subsection]
+\newcounter{leanSection}
+\titleformat{\leanSection}{\clearpage\normalfont\large\bfseries\color{leanpurple}}{Lean Interlude \theleanSection:}{1em}{}
+%\titleformat{\lsubSection}{\normalfont\large\bfseries}{\thesubsection}{1em}{}
+\titlespacing*{\leanSection} {0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+%\titlecontents{leanSection}[1.5em]{}{}{\hspace*{-2.3em}}{\titlerule*[0.75pc]{.}\contentspage} %bad formatting, but only here to produce a content line in ToC
+%\dottedcontents{leanSection}[1.5cm]{}{2.3em}{1pc}
+
+\renewcommand{\sectionmark}[1]{\markright{\thesection~---~#1}}
+\renewcommand{\subsectionmark}[1]{}
+\renewcommand{\leanSectionmark}[1]{}
+%\renewcommand{\subsectionmark}[1]{ \markright{#1}{} }
+%\renewcommand{\leanSectionmark}[1]{\markright{{\color{leanpurple}Lean: #1}}{} }
+
+\titlecontents{leanSection}[5.4em]{}
+{\contentslabel[{\color{leanpurple}Lean \thecontentslabel:}]{3.8em}}
+{}
+{\titlerule*[.75pc]{.}\contentspage}
+
+
